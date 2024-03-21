@@ -11,19 +11,14 @@ class TwitterEmbedCard extends StatelessWidget {
         if (maxWidth > 600) {
           maxWidth = 600;
         }
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildTop(maxWidth),
-                _buildContent(maxWidth),
-                _buildInf(maxWidth),
-                _buildBottom(maxWidth),
-              ],
-            ),
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildTop(maxWidth),
+            _buildContent(maxWidth),
+            _buildInf(maxWidth),
+            _buildBottom(maxWidth),
+          ],
         ); _buildTop(maxWidth);
       },
     );
@@ -32,36 +27,31 @@ class TwitterEmbedCard extends StatelessWidget {
   Widget _buildTop(double maxWidth) {
     return Container(
       width: maxWidth,
-      height: 60,
+      height: 50,
       color: Colors.red,
     );
   }
   Widget _buildContent(double maxWidth) {
     return Container(
       width: maxWidth,
-      height: 530,
+      height: 500,
       color: Colors.green,
     );
   }
   Widget _buildInf(double maxWidth) {
     return Container(
       width: maxWidth,
-      height: 30,
+      height: 50,
       color: Colors.blue,
     );
   }
   Widget _buildBottom(double maxWidth) {
     return Container(
       width: maxWidth,
-      height: 80,
+      height: 55,
       color: Colors.amber,
       child: Row(
         children: [
-          Icon(Icons.favorite_rounded),
-          Icon(Icons.info_outlined),
-          Icon(Icons.verified),
-          Icon(Icons.messenger_outline_sharp),
-          Icon(Icons.insert_link_outlined),
         ],
       ),
     );
