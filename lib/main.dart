@@ -17,7 +17,12 @@ class MyApp extends StatelessWidget {
     });
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TwitterEmbed(),
+      home: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: TwitterEmbedCard(),
+        ),
+      ),
     );
   }
 }
