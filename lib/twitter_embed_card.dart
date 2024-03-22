@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:ui_challenges_andrea/content.dart';
 import 'package:ui_challenges_andrea/profile.dart';
 import 'package:ui_challenges_andrea/svg_icon.dart';
 
@@ -9,8 +11,13 @@ class TwitterEmbedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssetImage image = const AssetImage("assets/andrea-avatar.png");
+    AssetImage profileImage = const AssetImage("assets/andrea-avatar.png");
+    AssetImage contentImage = const AssetImage("assets/media-query-banner.jpg");
+    DateTime date = DateTime(2023, 6, 20, 10, 21);
     String name = "Andrea Bizzotto";
+    String content = "Did you know?\n\nWhen you call `MediaQuery.of(context)` inside a build method, the widget will rebuild when *any* of the MediaQuery properties change.\n\nBut there's a better way that lets you depend only on the properties you care about (and minimize unnecessary rebuilds). 👇";
+
+
     List<SvgIcon> badges = [
       const SvgIcon(
         asset: SvgAsset.heartBlue,
@@ -30,50 +37,29 @@ class TwitterEmbedCard extends StatelessWidget {
         if (maxWidth > 600) {
           maxWidth = 600;
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Profile(
-              maxWidth: maxWidth,
-              image: image,
-              name: name,
-              badges: badges,
-              handle: handle,
-              followStatus: followStatus,
-            ),
-            _buildContent(maxWidth),
-            _buildInf(maxWidth),
-            _buildBottom(maxWidth),
-          ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Profile(
+                maxWidth: maxWidth,
+                image: profileImage,
+                name: name,
+                badges: badges,
+                handle: handle,
+                followStatus: followStatus,
+              ),
+              Content(
+                maxWidth: maxWidth,
+                likes: 1000,
+                content: content,
+                replies: 17,
+                image: contentImage,
+                date: date,
+              ),
+            ],
+          ),
         );
       },
-    );
-  }
-
-  Widget _buildContent(double maxWidth) {
-    return Container(
-      width: maxWidth,
-      height: 500,
-      color: Colors.green,
-    );
-  }
-
-  Widget _buildInf(double maxWidth) {
-    return Container(
-      width: maxWidth,
-      height: 50,
-      color: Colors.blue,
-    );
-  }
-
-  Widget _buildBottom(double maxWidth) {
-    return Container(
-      width: maxWidth,
-      height: 55,
-      color: Colors.amber,
-      child: const Row(
-        children: [],
-      ),
     );
   }
 }

@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Center(child: TwitterEmbedCard()),
+          child: Align(
+              alignment: Alignment.topCenter,
+              child: TwitterEmbedCard()),
         ),
       ),
     );
