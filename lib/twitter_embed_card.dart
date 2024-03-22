@@ -16,7 +16,8 @@ class TwitterEmbedCard extends StatelessWidget {
     DateTime date = DateTime(2023, 6, 20, 10, 21);
     String name = "Andrea Bizzotto";
     String content = "Did you know?\n\nWhen you call `MediaQuery.of(context)` inside a build method, the widget will rebuild when *any* of the MediaQuery properties change.\n\nBut there's a better way that lets you depend only on the properties you care about (and minimize unnecessary rebuilds). 👇";
-
+    int likes = 997;
+    int replies = 12;
 
     List<SvgIcon> badges = [
       const SvgIcon(
@@ -50,9 +51,9 @@ class TwitterEmbedCard extends StatelessWidget {
               ),
               Content(
                 maxWidth: maxWidth,
-                likes: 1000,
+                likes: likes,
                 content: content,
-                replies: 17,
+                replies: replies,
                 image: contentImage,
                 date: date,
               ),

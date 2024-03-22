@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      var screenSize = MediaQuery.of(context).size;
-      print('화면 너비: ${screenSize.width}');
-      print('화면 높이: ${screenSize.height}');
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   var screenSize = MediaQuery.of(context).size;
+    //   print('화면 너비: ${screenSize.width}');
+    //   print('화면 높이: ${screenSize.height}');
+    // });
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
