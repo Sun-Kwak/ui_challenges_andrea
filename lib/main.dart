@@ -1,13 +1,11 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_asset.dart';
-import 'package:ui_challenges_andrea/ui_001-twitter_card/twitter_embed_card.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SvgAsset.preloadSVGs();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -47,6 +45,7 @@ class CountdownAndRestart extends StatefulWidget {
 class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTickerProviderStateMixin{
   static const maxWidth = 300.0;
   late Ticker _ticker;
+  late AnimationController _controller;
   int _countdown = 10;
 
   @override
@@ -60,17 +59,31 @@ class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTic
         }
       });
     });
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: _countdown),
+    );
+    _controller.addListener(() {
+      setState(() {});
+    });
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reset();
+      }
+    });
   }
 
   @override
   void dispose() {
     _ticker.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   void startCountdown() {
     _ticker.stop();
     _ticker.start();
+    _controller.forward();
   }
 
 
@@ -86,6 +99,7 @@ class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTic
           child: CustomPaint(
             painter: CustomCounterPainter(
               countdown: _countdown,
+              progress: _controller.value,
             ),
           ),
         ),
@@ -107,34 +121,46 @@ class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTic
 
 class CustomCounterPainter extends CustomPainter {
   final int countdown;
+  final double progress;
 
-  CustomCounterPainter({ required this.countdown});
+  CustomCounterPainter({required this.countdown, required this.progress});
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Colors.black
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 4.0
+      ..strokeWidth = 20.0
       ..style = PaintingStyle.stroke;
 
-    final center = size.width / 2;
-    final radius = center - paint.strokeWidth / 2;
+    Offset center = size.center(Offset.zero);
+    final radius = size.width / 2 - paint.strokeWidth / 2;
 
     // Draw background circle
-    paint.color = Colors.grey.withOpacity(0.3);
-    canvas.drawCircle(Offset(center, center), radius, paint);
+    paint.color = Colors.deepPurple.withOpacity(0.7);
+    canvas.drawCircle(center, radius, paint);
+
+
+    Rect rect = Rect.fromCircle(center: center, radius: radius);
+    final progressPaint = Paint()
+    ..color = Colors.deepPurple
+      ..strokeWidth = 20.0
+      ..style = PaintingStyle.stroke;
+
+    // Draw progress arc
+    canvas.drawArc(rect, math.pi/2*3, progress == 0 ? 0 : math.pi * 2-(progress * math.pi * 2), false, progressPaint);
+    //
 
     // Draw countdown text
     TextPainter textPainter = TextPainter(
       text: TextSpan(
         text: '$countdown',
-        style: TextStyle(fontSize: 100.0, fontWeight: FontWeight.w500, color: Colors.deepPurple),
+        style: const TextStyle(fontSize: 100.0, fontWeight: FontWeight.w500, color: Colors.deepPurple),
       ),
       textDirection: TextDirection.ltr,
     );
     textPainter.layout();
-    textPainter.paint(canvas, Offset(center - textPainter.width / 2, center - textPainter.height / 2));
+    textPainter.paint(canvas, Offset(center.dx - textPainter.width / 2, center.dy - textPainter.height / 2));
   }
 
   @override
