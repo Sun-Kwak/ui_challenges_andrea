@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:ui_challenges_andrea/content.dart';
-import 'package:ui_challenges_andrea/profile.dart';
-import 'package:ui_challenges_andrea/svg_icon.dart';
-
+import 'package:ui_challenges_andrea/ui_001-twitter_card/content.dart';
+import 'package:ui_challenges_andrea/ui_001-twitter_card/profile.dart';
+import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_icon.dart';
 import 'svg_asset.dart';
 
 class TwitterEmbedCard extends StatelessWidget {
@@ -18,7 +16,6 @@ class TwitterEmbedCard extends StatelessWidget {
     String content = "Did you know?\n\nWhen you call `MediaQuery.of(context)` inside a build method, the widget will rebuild when *any* of the MediaQuery properties change.\n\nBut there's a better way that lets you depend only on the properties you care about (and minimize unnecessary rebuilds). 👇";
     int likes = 997;
     int replies = 12;
-
     List<SvgIcon> badges = [
       const SvgIcon(
         asset: SvgAsset.heartBlue,

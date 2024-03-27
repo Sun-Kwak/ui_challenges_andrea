@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ui_challenges_andrea/svg_asset.dart';
-import 'package:ui_challenges_andrea/svg_icon.dart';
+import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_asset.dart';
+import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_icon.dart';
+
 
 class Content extends StatelessWidget {
   final double maxWidth;
@@ -37,8 +38,6 @@ class Content extends StatelessWidget {
     String formattedDate = DateFormat('h:mm a MMM dd, yyyy').format(date);
     double ratio = 0.227; //30/132
     double height = (((maxWidth)-600) * ratio)+560;
-    print(maxWidth);
-    print(height);
     return SizedBox(
       width: maxWidth,
       height: height,
@@ -121,7 +120,7 @@ class Content extends StatelessWidget {
             elevation: 0,
             backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
-              side:  BorderSide(color: Colors.black.withOpacity(0.7)), // 테두리 색상
+              side:  BorderSide(color: Colors.black.withOpacity(0.5)), // 테두리 색상
               borderRadius: BorderRadius.circular(16), // 선택적으로 테두리 모양 지정
             ),
           ),

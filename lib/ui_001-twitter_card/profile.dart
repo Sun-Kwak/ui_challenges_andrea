@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ui_challenges_andrea/svg_asset.dart';
-import 'package:ui_challenges_andrea/svg_icon.dart';
+import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_asset.dart';
+import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_icon.dart';
 
 class Profile extends StatelessWidget {
   final double maxWidth;
@@ -66,16 +66,18 @@ class Profile extends StatelessWidget {
                       height: 1,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.black, // 원형 점의 색상 설정
+                        color: Colors.black,
                       ),
                     ),
                     SizedBox(width: gap),
                     followStatus == FollowStatus.following
                         ? const Text('UnFollow')
-                        : const Text('Follow',
+                        : const Text(
+                            'Follow',
                             style: TextStyle(
                                 color: Color(0xFF3A76D2),
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold),
+                          ),
                   ],
                 ),
               ],
