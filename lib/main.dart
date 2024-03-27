@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_asset.dart';
 import 'package:ui_challenges_andrea/ui_001-twitter_card/twitter_embed_card.dart';
 
@@ -42,14 +44,35 @@ class CountdownAndRestart extends StatefulWidget {
   CountdownAndRestartState createState() => CountdownAndRestartState();
 }
 
-class CountdownAndRestartState extends State<CountdownAndRestart> {
+class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTickerProviderStateMixin{
   static const maxWidth = 300.0;
+  late Ticker _ticker;
+  int _countdown = 10;
 
   @override
   void initState() {
     super.initState();
-    // TODO: Implement
+    _ticker = Ticker((elapsed) {
+      setState(() {
+        _countdown = 10 - elapsed.inSeconds;
+        if (_countdown <= 0) {
+          _ticker.stop(); // Stop ticker when countdown reaches 0
+        }
+      });
+    });
   }
+
+  @override
+  void dispose() {
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  void startCountdown() {
+    _ticker.stop();
+    _ticker.start();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +80,20 @@ class CountdownAndRestartState extends State<CountdownAndRestart> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // TODO: Add countdown widget
-        const Text(
-          'Replace this Text widget with the custom countdown UI',
-          textAlign: TextAlign.center,
+        SizedBox(
+          width: maxWidth,
+          height: maxWidth,
+          child: CustomPaint(
+            painter: CustomCounterPainter(
+              countdown: _countdown,
+            ),
+          ),
         ),
         const SizedBox(height: 32),
         ElevatedButton(
-          onPressed: () {}, // TODO: Implement
+          onPressed: () {
+            startCountdown();
+          }, // TODO: Implement
           child: const Text(
             'Restart',
             style: TextStyle(fontSize: 32),
@@ -75,3 +104,44 @@ class CountdownAndRestartState extends State<CountdownAndRestart> {
     );
   }
 }
+
+class CustomCounterPainter extends CustomPainter {
+  final int countdown;
+
+  CustomCounterPainter({ required this.countdown});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 4.0
+      ..style = PaintingStyle.stroke;
+
+    final center = size.width / 2;
+    final radius = center - paint.strokeWidth / 2;
+
+    // Draw background circle
+    paint.color = Colors.grey.withOpacity(0.3);
+    canvas.drawCircle(Offset(center, center), radius, paint);
+
+    // Draw countdown text
+    TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: '$countdown',
+        style: TextStyle(fontSize: 100.0, fontWeight: FontWeight.w500, color: Colors.deepPurple),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+    textPainter.paint(canvas, Offset(center - textPainter.width / 2, center - textPainter.height / 2));
+  }
+
+  @override
+  bool shouldRepaint(CustomCounterPainter oldDelegate) {
+    return true;
+  }
+}
+
+
+
