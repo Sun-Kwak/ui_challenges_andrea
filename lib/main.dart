@@ -81,8 +81,10 @@ class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTic
   }
 
   void startCountdown() {
+
     _ticker.stop();
     _ticker.start();
+    _controller.reset();
     _controller.forward();
   }
 
@@ -148,6 +150,11 @@ class CustomCounterPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     // Draw progress arc
+    //rect : 호의 경계
+    //startAngle : 호의 시작 각도
+    //sweepAngle : 호의 각도
+    //useCenter : 호의 중심을 사용할지 여부 (중심점과 연결됨)
+    //paint : 그리기에 사용할 Paint 객체
     canvas.drawArc(rect, math.pi/2*3, progress == 0 ? 0 : math.pi * 2-(progress * math.pi * 2), false, progressPaint);
     //
 
