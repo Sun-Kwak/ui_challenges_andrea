@@ -55,6 +55,7 @@ class CountdownAndRestartState extends State<CountdownAndRestart> with SingleTic
       setState(() {
         _countdown = 10 - elapsed.inSeconds;
         if (_countdown <= 0) {
+          _countdown = 0;
           _ticker.stop(); // Stop ticker when countdown reaches 0
         }
       });
