@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:ui_challenges_andrea/ui_001-twitter_card/svg_asset.dart';
 
 void main() async {
   runApp(const MyApp());
